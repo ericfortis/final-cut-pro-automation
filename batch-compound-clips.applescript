@@ -1,10 +1,10 @@
--- This AppleScript wraps each Clip on its own Compound Clip.
+-- This AppleScript wraps each Clip in its own Compound Clip.
 
--- The automation does the following:
+-- The script automates these steps:
 --   a. Command + RightArrow (Selects Next Clip)
---   b. Alt + G (Compound Clip shortcut)
---   c. Return (Confirm Compound Modal)
---   d. Stop when "Edit > Select > Select Next" is disabled, which means there are no more clips
+--   b. Alt + G (Compound Clip)
+--   c. Return (Confirm Compound Clip)
+--   d. Stops when "Edit > Select > Select Next" is disabled, which means there are no more clips
 
 -- Before running this program:
 --   1. Duplicate your Final Cut project (just in case) 
@@ -13,8 +13,8 @@
 -- Running:
 --   1. Open Script Editor.app
 --   2. Paste this program there
---   3. Click Run Script (Play button)
---   4. Let if finish (don’t try to stop it)
+--   3. Click "Run the Script" (Play button)
+--   4. Let it finish (don’t try to stop it)
 
 tell application "System Events"
 	tell process "Final Cut Pro"
