@@ -1,10 +1,11 @@
--- This AppleScript wraps each Clip in its own Compound Clip.
-
--- The script automates these steps:
+-- This AppleScript wraps each Clip in its own Compound Clip by automating these steps:
 --   a. Command + RightArrow (Selects Next Clip)
 --   b. Alt + G (Compound Clip)
 --   c. Return (Confirm Compound Clip)
 --   d. Stops when "Edit > Select > Select Next" is disabled, which means there are no more clips
+
+-- Optionally, for speed, you can check:
+--   Settings > Accessibility > Reduce Motion
 
 -- Before running this program:
 --   1. Duplicate your Final Cut project (just in case) 
@@ -24,9 +25,9 @@ tell application "System Events"
 			menu "Select" of menu item "Select" of ¬
 			menu "Edit" of menu bar 1
 			
-			keystroke "g" using {option down}
+			keystroke "g" using option down
 			keystroke return
-			keystroke (ASCII character 29) using {command down}
+			key code 124 using command down
 		end repeat
 	end tell
 end tell
