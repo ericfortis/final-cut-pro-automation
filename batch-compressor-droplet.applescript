@@ -16,9 +16,6 @@ set selectedFiles to choose file with prompt "Select video files" of type videoU
 set dropletApp to choose file with prompt "Select your Compressor Droplet (.app)" of type {"app"}
 set dropletPath to POSIX path of dropletApp
 
--- Prevent sleep while script runs
-do shell script "caffeinate -s &"
-
 repeat with f in selectedFiles
 	-- Wait for transcoding to finish
 	repeat
