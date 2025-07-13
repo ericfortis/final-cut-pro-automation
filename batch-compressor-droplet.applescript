@@ -19,18 +19,19 @@ set dropletPath to POSIX path of dropletApp
 repeat with f in selectedFiles
 	-- Wait for transcoding to finish
 	repeat
-		delay 1
+		delay 2
 		set transcoding to (do shell script "pgrep TranscoderService || true")
 		if transcoding is "" then exit repeat
 	end repeat
 	
 	try
 		set fPath to POSIX path of f
+		
 		log "Processing: " & fPath
 		
 		do shell script "open -a " & quoted form of dropletPath & " -- " & quoted form of fPath
 		
-		delay 1
+		delay 0.2
 		tell application "System Events"
 			tell application process "Droplet"
 				set frontmost to true
