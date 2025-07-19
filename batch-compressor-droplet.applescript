@@ -37,11 +37,12 @@ repeat with f in selectedFiles
 				set frontmost to true
 				
 				repeat 10 times
+					delay 0.2
 					if exists button "Start Batch" of window 1 then exit repeat
-					delay 0.5
 				end repeat
 				
 				try
+					delay 0.2
 					click button "Start Batch" of window 1
 				end try
 			end tell
@@ -54,6 +55,7 @@ repeat with f in selectedFiles
 			if transcoding is "" then exit repeat
 		end repeat
 		
+		delay 1
 	on error errMsg
 		log "Error with: " & fPath & " - " & errMsg
 	end try
