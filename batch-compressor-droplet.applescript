@@ -1,3 +1,11 @@
+-- Instead of this AppleScript
+--   use batch-compressor-workaround.sh
+
+-- That’s because AppleScript uses a Droplet, and for automating it we need
+-- to bring it to the foreground on each file, so that makes it brittle if you are
+-- using the computer while that script is running. In contrast, the .sh automates
+-- Compressor (not a Droplet), so there’s no GUI interfering.
+
 -- This AppleScript is a workaround for a bug when retiming with Machine Learning a batch.
 --   Bug details: https://discussions.apple.com/thread/256096005
 
@@ -31,7 +39,13 @@ repeat with f in selectedFiles
 		log "Processing: " & fPath
 		do shell script "open -a " & quoted form of dropletPath & " -- " & quoted form of fPath
 		
-		delay 0.2
+		-- wait until the Droplet app shows up in System Events
+		repeat 20 times -- wait up to ~10 seconds
+			tell application "System Events"
+				if (exists application process "Droplet") then exit repeat
+			end tell
+			delay 0.5
+		end repeat
 		tell application "System Events"
 			tell application process "Droplet"
 				set frontmost to true
