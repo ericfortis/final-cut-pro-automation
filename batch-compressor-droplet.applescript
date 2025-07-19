@@ -17,9 +17,9 @@ set dropletApp to choose file with prompt "Select your Compressor Droplet (.app)
 set dropletPath to POSIX path of dropletApp
 
 
--- 1. Wait until no transcoder job is active
+-- Wait until no transcoder job is active
 repeat
-	delay 2
+	delay 1
 	set transcoding to (do shell script "pgrep TranscoderService || true")
 	if transcoding is "" then exit repeat
 end repeat
@@ -36,7 +36,6 @@ repeat with f in selectedFiles
 			tell application process "Droplet"
 				set frontmost to true
 				
-				-- 2. Wait for UI to be ready
 				repeat 10 times
 					if exists button "Start Batch" of window 1 then exit repeat
 					delay 0.5
@@ -45,23 +44,15 @@ repeat with f in selectedFiles
 				try
 					click button "Start Batch" of window 1
 				end try
-				
-				-- 3. Wait until transcoding *has started*
-				repeat
-					delay 0.2
-					set transcoding to (do shell script "pgrep TranscoderService || true")
-					if transcoding is not "" then exit repeat
-				end repeat
-				
-				-- 4. Wait until transcoding *has finished*
-				repeat
-					delay 2
-					set transcoding to (do shell script "pgrep TranscoderService || true")
-					if transcoding is "" then exit repeat
-				end repeat
-				
 			end tell
 		end tell
+		
+		-- Wait until transcoding *has finished*
+		repeat
+			delay 2
+			set transcoding to (do shell script "pgrep TranscoderService || true")
+			if transcoding is "" then exit repeat
+		end repeat
 		
 	on error errMsg
 		log "Error with: " & fPath & " - " & errMsg
