@@ -17,14 +17,43 @@
 --   3. Click "Run the Script" (Play button)
 --   4. Let it finish (don't try to stop it)
 
-display dialog "Enter clip name prefix:" default answer "video"
-set prefix to text returned of the result
 
-set counter to 1
+set activeProjectName to ""
 
 tell application "System Events"
 	tell process "Final Cut Pro"
 		set frontmost to true
+		delay 0.2
+		
+		tell menu bar 1
+			tell menu bar item "File"
+				tell menu "File"
+					repeat with mi in menu items
+						set miName to name of mi
+						if miName starts with "Close Ò" then
+							set AppleScript's text item delimiters to {"Ò", "Ó"}
+							set activeProjectName to text item 2 of miName
+							set AppleScript's text item delimiters to ""
+							exit repeat
+						end if
+					end repeat
+				end tell
+			end tell
+		end tell
+	end tell
+end tell
+
+
+tell application "Script Editor" to activate
+display dialog "Enter clip name prefix:" default answer activeProjectName
+set prefix to text returned of the result
+
+
+set counter to 1
+tell application "System Events"
+	tell process "Final Cut Pro"
+		set frontmost to true
+		keystroke "a" -- Pick Select Tool
 		
 		repeat while enabled of menu item "Select Next" of menu "Select" of menu item "Select" of menu "Edit" of menu bar 1
 			keystroke "g" using option down
