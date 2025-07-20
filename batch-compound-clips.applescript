@@ -53,6 +53,8 @@ set counter to 1
 tell application "System Events"
 	tell process "Final Cut Pro"
 		set frontmost to true
+		delay 0.2
+		
 		keystroke "a" -- Pick Select Tool
 		
 		repeat while enabled of menu item "Select Next" of menu "Select" of menu item "Select" of menu "Edit" of menu bar 1
