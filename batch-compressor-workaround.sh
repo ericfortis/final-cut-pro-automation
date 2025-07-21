@@ -8,7 +8,7 @@ setopt nullglob
 
 #PRESET_NAME=60ML2xSlow
 PRESET_NAME=60ML
-DEFAULT_PRESET="$HOME/Library/Group Containers/PTN9T2S29T.com.apple.videoProApps/Library/Application Support/Compressor/Settings/${PRESET_NAME}.compressorsetting"
+DEFAULT_PRESET="$HOME/Movies/Compressor/Settings/${PRESET_NAME}.compressorsetting"
 
 INDIR="$1"
 PRESET="${2:-$DEFAULT_PRESET}"
@@ -36,14 +36,14 @@ for ext in mov mp4 mkv; do
      -batchname "MyBatch" \
      -settingpath "$PRESET" \
      -jobpath "$f" \
-     -locationpath "$OUTDIR/$(basename "$f")"
+     -locationpath "$OUTDIR/$(basename "$f")" >/dev/null 2>&1
 
     # Wait for TranscoderService to appear
     while ! pgrep TranscoderService >/dev/null; do
       sleep 0.5
     done
 
-    echo "Transcoding $(basename "$f")"
+    printf "\rTranscoding $(basename "$f")"
     while pgrep TranscoderService >/dev/null; do
       sleep 1
     done
@@ -52,6 +52,6 @@ for ext in mov mp4 mkv; do
   done
 done
 
-echo "DONE"
+print "\n"
 
 kill $CAFFEINATE_PID
