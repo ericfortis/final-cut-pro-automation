@@ -27,6 +27,7 @@ fi
 OUTDIR="$HOME/Movies/out/$(basename "$INDIR")"
 mkdir -p "$OUTDIR"
 
+# Prevent system sleep
 caffeinate -s &
 CAFFEINATE_PID=$!
 
