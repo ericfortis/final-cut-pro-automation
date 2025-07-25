@@ -6,16 +6,13 @@ setopt nullglob
 # The workaround is scheduling a batch but one file at a time.
 # Bug details: https://discussions.apple.com/thread/256096005
 
-#PRESET_NAME=60ML2xSlow
-PRESET_NAME=60ML
-DEFAULT_PRESET="$HOME/Movies/Compressor/Settings/${PRESET_NAME}.compressorsetting"
-
 INDIR="$1"
-PRESET="${2:-$DEFAULT_PRESET}"
+PRESET="$2"
+OUTDIR="$HOME/Movies/out/$(basename "$INDIR")"
 
 if [ -z "$INDIR" ] || [ ! -d "$INDIR" ]; then
-  echo "Usage: $0 <input_dir> [preset_path]"
-  echo "Example: $0 ~/Movies/foo"
+  echo "Usage: $0 <input_dir> <preset_path>"
+  echo "Example: $0 ~/Movies/foo/ ~/mypreset.compressorsetting"
   exit 1
 fi
 
@@ -24,7 +21,6 @@ if [ ! -f "$PRESET" ]; then
   exit 1
 fi
 
-OUTDIR="$HOME/Movies/out/$(basename "$INDIR")"
 mkdir -p "$OUTDIR"
 
 # Prevent system sleep
