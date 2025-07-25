@@ -27,7 +27,7 @@ fi
 OUTDIR="$HOME/Movies/out/$(basename "$INDIR")"
 mkdir -p "$OUTDIR"
 
-caffeinate -dimsu &
+caffeinate -s &
 CAFFEINATE_PID=$!
 
 for ext in mov mp4 mkv; do
@@ -52,6 +52,7 @@ for ext in mov mp4 mkv; do
   done
 done
 
-print "\n"
+echo "\n"
+date
 
 kill $CAFFEINATE_PID
