@@ -10,14 +10,18 @@ INDIR="$1"
 PRESET="$2"
 OUTDIR="$HOME/Movies/out/$(basename "$INDIR")"
 
-if [ -z "$INDIR" ] || [ ! -d "$INDIR" ]; then
+if [ -z "$INDIR" ]; then
   echo "Usage: $0 <input_dir> <preset_path>"
-  echo "Example: $0 ~/Movies/foo/ ~/mypreset.compressorsetting"
+  exit 1
+fi
+
+if [ ! -d "$INDIR" ]; then
+  echo "Directory not found: $INDIR"
   exit 1
 fi
 
 if [ ! -f "$PRESET" ]; then
-  echo "Preset not found"
+  echo "Preset not found: $PRESET"
   exit 1
 fi
 
@@ -27,6 +31,7 @@ mkdir -p "$OUTDIR"
 caffeinate -s &
 CAFFEINATE_PID=$!
 
+start=$(date +%s)
 for ext in mov mp4 mkv; do
   for f in "$INDIR"/*.$ext; do
     /Applications/Compressor.app/Contents/MacOS/Compressor \
@@ -44,12 +49,9 @@ for ext in mov mp4 mkv; do
     while pgrep TranscoderService >/dev/null; do
       sleep 1
     done
-
-    sleep 2
   done
 done
 
-echo "\n"
-date
+echo "\nElapsed: $(( ($(date +%s) - $start) /60 ))m"
 
 kill $CAFFEINATE_PID
