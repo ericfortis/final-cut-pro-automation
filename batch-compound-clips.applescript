@@ -10,6 +10,7 @@
 -- Before running this program:
 --   1. Duplicate your Final Cut project (just in case) 
 --   2. Put the playhead before the first clip you want to compound
+--   3. Ensure the Browser is closed (Ctrl+Cmd+1)
 
 -- Running:
 --   1. Open Script Editor.app
@@ -30,8 +31,8 @@ tell application "System Events"
 				tell menu "File"
 					repeat with mi in menu items
 						set miName to name of mi
-						if miName starts with "Close Ò" then
-							set AppleScript's text item delimiters to {"Ò", "Ó"}
+						if miName starts with "Close ï¿½" then
+							set AppleScript's text item delimiters to {"ï¿½", "ï¿½"}
 							set activeProjectName to text item 2 of miName
 							set AppleScript's text item delimiters to ""
 							exit repeat
