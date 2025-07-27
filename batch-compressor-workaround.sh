@@ -7,11 +7,11 @@ setopt nullglob
 # Bug details: https://discussions.apple.com/thread/256096005
 
 INDIR="$1"
-PRESET="$2"
-OUTDIR="$HOME/Movies/out/$(basename "$INDIR")"
+OUTDIR="$2"
+PRESET="$3"
 
-if [ -z "$INDIR" ]; then
-  echo "Usage: $0 <input_dir> <preset_path>"
+if [ -z "$INDIR" ] || [ -z "$OUTDIR" ]; then
+  echo "Usage: $0 <input_dir> <out_dir> <preset_path>"
   exit 1
 fi
 
